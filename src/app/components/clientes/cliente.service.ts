@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Cliente } from './cliente';
 import { CLIENTES } from './clientes.json';
 
@@ -8,10 +10,15 @@ import { CLIENTES } from './clientes.json';
 })
 export class ClienteService {
 
-  constructor() { }
+  private url:string = 'http://localhost:8080/api/clientes';
+
+  constructor(private http: HttpClient) { }
 
   getClientes(): Observable<Cliente[]>{
-    return of(CLIENTES);
+    //return of(CLIENTES);
+    return this.http.get(this.url).pipe(
+      map(resp => resp as Cliente[])
+    )
   }
 
 

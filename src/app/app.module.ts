@@ -7,6 +7,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { DirectivaComponent } from './components/directiva/directiva.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http'
 
 const routes: Routes = [
   {path: '', redirectTo: '/clientes', pathMatch: 'full'},
@@ -24,6 +25,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
