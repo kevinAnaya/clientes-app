@@ -3,7 +3,10 @@
   <div>
     <button [routerLink]="['/clientes/crear']"class="btn btn-primary">Crear cliente</button>
   </div>
-    <table class="table table-hover">
+    <div class="container mt-2 alert alert-info" *ngIf="clientes?.length == 0">
+        No hay registros en la base de datos!
+    </div>
+    <table class="table table-hover" *ngIf="clientes?.length > 0">
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -11,6 +14,7 @@
             <th scope="col">Apellido</th>
             <th scope="col">Fecha</th>
             <th scope="col">Email</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -20,6 +24,13 @@
             <td>{{cliente.apellido}}</td>
             <td>{{cliente.createAt}}</td>
             <td>{{cliente.email}}</td>
+            <td> 
+              <button type="button" class="btn btn-primary" [routerLink]="['/clientes/crear', cliente.id_cliente]">Editar</button>
+            </td>
+              &nbsp;
+            <td>
+              <button type="button" class="btn btn-danger" (click)="deleteCliente(cliente)">Eliminar</button>
+            </td>
           </tr>
         </tbody>
       </table>

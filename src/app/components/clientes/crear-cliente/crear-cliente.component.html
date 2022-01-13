@@ -1,7 +1,7 @@
 <div class="card bg-dark text-white mt-2">
     <div class="card-header">{{ titulo }}</div>
     <div class="card-body">
-        <form (ngSubmit)="crearCliente()">
+        <form>
 
             <div class="form-group row">
                 <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
@@ -23,15 +23,20 @@
                     <input class="form-control" type="email" [(ngModel)]="cliente.email" name="email">
                 </div>
             </div>
-                <br>
+            <br>
             <div class="form-group row">
                 <div class="col-sm-6">
-                    <button class="btn btn-success" type="submit">Crear</button>
-                     &nbsp;
-                    <button [routerLink]="['/clientes']"class="btn btn-primary" type="button">Regresar</button>
+                    <button class="btn btn-success" *ngIf="!cliente.id_cliente; else elseBlock" (click)="crearCliente()" type="button">crear</button>    
+                <ng-template #elseBlock>
+                    <button class="btn btn-success" type="button" (click)="updateCliente()">Editar</button>
+                </ng-template>
+
+                &nbsp;
+
+                    <button type="button" class="btn btn-primary" [routerLink]="['/clientes']">Regresar</button>
+                    
                 </div>
             </div>
-
         </form>
     </div>
 </div>

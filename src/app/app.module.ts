@@ -15,7 +15,8 @@ const routes: Routes = [
   {path: '', redirectTo: '/clientes', pathMatch: 'full'},
   {path: 'directivas', component: DirectivaComponent},
   {path: 'clientes', component: ClientesComponent},
-  {path: 'clientes/crear', component: CrearClienteComponent}
+  {path: 'clientes/crear', component: CrearClienteComponent},
+  {path: 'clientes/crear/:id', component: CrearClienteComponent}
 ];
 
 @NgModule({
