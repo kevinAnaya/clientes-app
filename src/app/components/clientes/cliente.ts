@@ -3,5 +3,6 @@ export class Cliente {
     nombre     : String;
     apellido   : String;
     createAt   : String;
-    email      : String
+    email      : String;
+    mensaje    : String 
 }

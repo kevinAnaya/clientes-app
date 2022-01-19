@@ -1,32 +1,53 @@
 <div class="card bg-dark text-white mt-2">
     <div class="card-header">{{ titulo }}</div>
     <div class="card-body">
-        <form>
+        <form #miform="ngForm" autocomplete="off">
 
             <div class="form-group row">
                 <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
                 <div class="col-sm-6">
-                    <input class="form-control" type="text" [(ngModel)]="cliente.nombre" name="nombre">
+                    <input class="form-control" type="text" [(ngModel)]="cliente.nombre" name="nombre" required minlength="4" #nombre="ngModel">
+                    <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                        <div *ngIf="nombre.errors.required">
+                            Campo obligatorio
+                        </div>
+                        <div *ngIf="nombre.errors.minlength">
+                            Mínimo 4 caracteres
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
             <div class="form-group row">
                 <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
                 <div class="col-sm-6">
-                    <input class="form-control" type="text" [(ngModel)]="cliente.apellido" name="apellido">
+                    <input class="form-control" type="text" [(ngModel)]="cliente.apellido" name="apellido" required #apellido="ngModel">
+                    <div class="alert alert-danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+                        <div *ngIf="apellido.errors.required">
+                            Campo obligatorio
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
             <div class="form-group row">
                 <label for="email" class="col-form-label col-sm-2">Email</label>
                 <div class="col-sm-6">
-                    <input class="form-control" type="email" [(ngModel)]="cliente.email" name="email">
+                    <input class="form-control" type="email" [(ngModel)]="cliente.email" name="email" required email #email="ngModel">
+                    <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div *ngIf="email.errors.required">
+                            Campo obligatorio
+                        </div>
+                        <div *ngIf="email.errors.email">
+                            Formato de email incorrecto
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
             <div class="form-group row">
                 <div class="col-sm-6">
-                    <button class="btn btn-success" *ngIf="!cliente.id_cliente; else elseBlock" (click)="crearCliente()" type="button">crear</button>    
+                    <button class="btn btn-success" *ngIf="!cliente.id_cliente; else elseBlock" (click)="crearCliente()" type="button" [disabled]="miform.invalid">crear</button>    
                 <ng-template #elseBlock>
                     <button class="btn btn-success" type="button" (click)="updateCliente()">Editar</button>
                 </ng-template>

@@ -25,37 +25,40 @@ export class CrearClienteComponent implements OnInit {
     this.obtenerCliente()
   }
 
-  public crearCliente(): void {
+  crearCliente(): void {
     this.clienteService.addCliente(this.cliente)
-        .subscribe(resp =>{
+        .subscribe((resp:any) =>{
             this.router.navigateByUrl('/clientes')
             swal.fire({
               icon: 'success',
-              title: 'Correcto',
-              text: `Cliente ${resp.nombre} agregado`
+              title: `${resp.mensaje}`,
+              text: `Cliente ${resp.cliente.nombre} agregado`
             })
         })
   }
 
-  public obtenerCliente(): void{
+  obtenerCliente(): void{
     this.activatedRoute.params
-        .pipe(
-          switchMap( ({id}) => this.clienteService.getCliente(id))
-        )
-        .subscribe( cliente => {
-          this.cliente = cliente
-        });
+          .subscribe(params => {
+            let id = params['id']
+            if(id){
+              this.clienteService.getCliente(id)
+                 .subscribe(cliente => {
+                   this.cliente = cliente;
+                 })
+            }
+          })
   }
 
-  public updateCliente(): void{
+  updateCliente(): void{
     this.clienteService.updateCliente(this.cliente)
-         .subscribe( cliente => {
-          this.router.navigateByUrl('/clientes')
+         .subscribe( (resp:any) => {
           swal.fire({
             icon: 'success',
-            title: 'Editado',
-            text: `${cliente.nombre} editado con éxito`
+            title: `${resp.mensaje}`,
+            text: `${resp.cliente.nombre} actualizado`
           })
+          this.router.navigateByUrl('/clientes')
          })
       }
 
