@@ -16,16 +16,21 @@ export class ClienteService {
   private httpHeaders = new HttpHeaders({'Content-type': 'application/json'})
 
   constructor(private http: HttpClient,
-               private router: Router) { }
+              private router: Router) { }
 
-  getClientes(): Observable<Cliente[]>{
-    return this.http.get<Cliente[]>(this.url)
+  getClientes(page: number): Observable<any>{
+    return this.http.get(`${this.url}/page/${page}`)
   }
 
   addCliente(cliente: Cliente): Observable<Cliente>{
     return this.http.post<Cliente>(`${this.url}/save`, cliente, {headers: this.httpHeaders})
         .pipe(
           catchError(e => {
+
+            if(e.status == 400){
+              return throwError(e);
+            }
+
             console.error(e.error.error)
             swal.fire({
               icon: 'error',
@@ -56,6 +61,11 @@ export class ClienteService {
     return this.http.put<Cliente>(`${this.url}/${cliente.id_cliente}`, cliente, {headers: this.httpHeaders})
           .pipe(
             catchError(e => {
+
+              if(e.status == 400){
+                return throwError(e);
+              }
+
               console.error(e.error.error)
               swal.fire({
                 icon: 'error',

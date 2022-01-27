@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-clientes',
@@ -12,13 +13,24 @@ import swal from 'sweetalert2';
 export class ClientesComponent implements OnInit {
 
   clientes: Cliente[] = []
+  paginador:any
 
-  constructor(private clienteService:ClienteService) { }
+  constructor(private clienteService:ClienteService,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void{
-    this.clienteService.getClientes().subscribe(data => {
-      this.clientes = data
-    })
+    this.activatedRoute.paramMap.subscribe( params => {
+    let page:number = +params.get('page');
+    if(!page){
+      page = 0
+    }
+    this.clienteService.getClientes(page).subscribe((data:any) => {
+      this.clientes = data.content as Cliente[]
+      this.paginador = data;
+    });
+
+  })
+
   }
 
   public deleteCliente(cliente: Cliente): void{

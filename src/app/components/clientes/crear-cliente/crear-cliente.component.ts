@@ -17,6 +17,8 @@ export class CrearClienteComponent implements OnInit {
 
   public titulo:String = "Crear cliente"
 
+  public errores: string[];
+
   constructor(private clienteService: ClienteService,
               private router:Router,
               private activatedRoute:ActivatedRoute ) { }
@@ -34,7 +36,13 @@ export class CrearClienteComponent implements OnInit {
               title: `${resp.mensaje}`,
               text: `Cliente ${resp.cliente.nombre} agregado`
             })
-        })
+        },
+        err => {
+          this.errores = err.error.errors as string[];
+          console.log('Código de estado del error: ' + err.status);
+          console.log(err.error.errors)
+        }
+        )
   }
 
   obtenerCliente(): void{
@@ -59,7 +67,13 @@ export class CrearClienteComponent implements OnInit {
             text: `${resp.cliente.nombre} actualizado`
           })
           this.router.navigateByUrl('/clientes')
-         })
+         },
+         err => {
+           this.errores = err.error.errors as string[];
+           console.log('Código de estado del error: ' + err.status);
+           console.log(err.error.errors)
+         }
+         )
       }
 
   }

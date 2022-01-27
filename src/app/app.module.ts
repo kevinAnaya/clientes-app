@@ -10,11 +10,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CrearClienteComponent } from './components/clientes/crear-cliente/crear-cliente.component'
 import { FormsModule } from '@angular/forms';
+import { PaginatorComponent } from './components/clientes/paginator/paginator.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/clientes', pathMatch: 'full'},
   {path: 'directivas', component: DirectivaComponent},
   {path: 'clientes', component: ClientesComponent},
+  {path: 'clientes/page/:page', component: ClientesComponent},
   {path: 'clientes/crear', component: CrearClienteComponent},
   {path: 'clientes/crear/:id', component: CrearClienteComponent}
 ];
@@ -26,7 +28,8 @@ const routes: Routes = [
     FooterComponent,
     DirectivaComponent,
     ClientesComponent,
-    CrearClienteComponent
+    CrearClienteComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,
