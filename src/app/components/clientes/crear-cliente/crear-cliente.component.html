@@ -50,6 +50,13 @@
             </div>
             <br>
             <div class="form-group row">
+                <label for="createAt" class="col-form-label col-sm-2">Fecha</label>
+                <div class="col-sm-6">
+                    <input class="form-control" type="date" [(ngModel)]="cliente.createAt" name="createAt">
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
                 <div class="col-sm-6">
                     <button class="btn btn-success" *ngIf="!cliente.id_cliente; else elseBlock" (click)="crearCliente()" type="button" [disabled]="miform.invalid">crear</button>    
                 <ng-template #elseBlock>
